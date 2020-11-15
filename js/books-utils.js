@@ -30,6 +30,7 @@ const booksDataJson = "./data/books-data.json";
 
 function getAllBookData(displayFunctions) {
   var jqxhr = $.getJSON(booksDataJson, function (data) {
+    allBooks = data;
     displayFunctions.forEach((f) => f(data));
   })
     .fail(function () {
