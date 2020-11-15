@@ -35,7 +35,7 @@
                         <a class="nav-link" href="about.html">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
+                        <a class="nav-link" href="all-works.html">All Works</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact</a>
@@ -120,9 +120,66 @@
         </div>
     </header>
 
+
     <!-- Page Content -->
-    <div class="row m-1" id="bookList">
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">About
+            <small>Subheading</small>
+        </h1>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item active"> <a href="all-works.html">All Works</a></li>
+        </ol>
+
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+            <li class="nav-item">
+                <a class="nav-link active" id="all-works-tab" data-toggle="tab" href="#all-works" role="tab"
+                    aria-controls="all-works" aria-selected="false">All Works</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="categories-tab" data-toggle="tab" href="#categories" role="tab"
+                    aria-controls="categories" aria-selected="false">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="authors-tab" data-toggle="tab" href="#authors" role="tab"
+                    aria-controls="authors" aria-selected="false">Authors</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link " id="popular-tab" data-toggle="tab" href="#popular" role="tab"
+                    aria-controls="popular" aria-selected="true">Popular</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="all-works" role="tabpanel" aria-labelledby="all-works-tab">
+                <div class="row m-1" id="bookList">
+                </div>
+            </div>
+            <div class="tab-pane" id="categories" role="tabpanel" aria-labelledby="categories-tab">
+                <ul class="list-group" id="categoriesList"></ul>
+
+            </div>
+
+            <div class="tab-pane" id="authors" role="tabpanel" aria-labelledby="authors-tab">
+                <ul class="list-group" id="authorsList"></ul>
+            </div>
+            <div class="tab-pane " id="popular" role="tabpanel" aria-labelledby="popular-tab">
+                <div class="row m-1" id="popularList">
+                </div>
+            </div>
+        </div>
     </div>
+
+
+    <!-- Page Content -->
+
     <!-- /.container -->
 
     <!-- Footer -->

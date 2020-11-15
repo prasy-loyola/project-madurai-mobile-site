@@ -81,3 +81,49 @@ function bookAsCard(book) {
 
   return cardHolder;
 }
+
+function displayNavCategories(data) {
+  let allCategories = unique(data.map((b) => b.category).sort());
+  let categoriesDropDown = $("#categories-dd");
+  $.each(allCategories, function (key, val) {
+    $(
+      `<a class="dropdown-item" href="all-works.html?category=${val}">${val}</a>`
+    ).appendTo(categoriesDropDown);
+  });
+}
+
+function displayBooks(data) {
+  let bookList = $("#bookList");
+  allBooks = data;
+  allBooks.sort((a, b) => (a.name > b.name ? 1 : -1));
+  console.log("jqxhr -> allBooks", allBooks);
+  let filteredBooks = filterBooks(allBooks, filterCriteria);
+  $.each(filteredBooks, function (key, val) {
+    bookAsCard(val).appendTo(bookList);
+  });
+}
+
+function displayAuthorsTab(data) {
+  let authors = data
+    .map((b) => b.author.split(";"))
+    .reduce((prev, curr) => [...prev, ...curr])
+    .map((a) => a.trim());
+
+  let allAuthors = unique(authors.sort());
+  let allAuthorsList = $("#authorsList");
+  $.each(allAuthors, function (key, val) {
+    $(
+      `<a class="dropdown-item" href="all-works.html?author=${val}">${val}</a>`
+    ).appendTo(allAuthorsList);
+  });
+}
+
+function displayCategoriesTab(data) {
+  let allCategories = unique(data.map((b) => b.category).sort());
+  let categoriesList = $("#categoriesList");
+  $.each(allCategories, function (key, val) {
+    $(
+      `<a class="dropdown-item" href="all-works.html?category=${val}">${val}</a>`
+    ).appendTo(categoriesList);
+  });
+}
