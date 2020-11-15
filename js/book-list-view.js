@@ -4,14 +4,21 @@ var groupingCriteria = { category: false, alphabetical: false };
 
 var allBooks;
 
-var filterCriteria = {
-  text: getUrlParameter("text"),
-  category: getUrlParameter("category"),
-  tag: getUrlParameter("tag"),
-  author: getUrlParameter("author"),
-  epub: false,
-  pdf: false,
-};
+function getFilterCriteriaFromURL() {
+  return {
+    text: getUrlParameter("text"),
+    category: getUrlParameter("category"),
+    tag: getUrlParameter("tag"),
+    author: getUrlParameter("author"),
+    epub: false,
+    pdf: false,
+  };
+}
+
+var filterCriteria = getFilterCriteriaFromURL();
+
+var isFiltered =
+  filterCriteria.author || filterCriteria.category || filterCriteria.tag;
 
 function getFilteredCriteriaAsText(filterCriteria) {
   return filterCriteria.text
@@ -25,33 +32,41 @@ function getFilteredCriteriaAsText(filterCriteria) {
     : "";
 }
 
-var isFiltered =
-  filterCriteria.author || filterCriteria.category || filterCriteria.tag;
-
 var displayFunctions = [
   displayBooks,
-  displayNavCategories,
+  //   displayNavCategories,
   displayCategoriesTab,
   displayAuthorsTab,
+  updateBreadCrumbs,
+  applyFilterEventListener,
 ];
 
 function filterBooksOnCriteria(event) {
-  let filterCriteriaData = $(event.target).data();
-  filterCriteria = {};
-  filterCriteria[filterCriteriaData.criteria] = filterCriteriaData.value;
+  filterCriteria = getFilterCriteriaFromURL();
+  displayFunctions.forEach((fn) => {
+    fn(allBooks);
+  });
+}
+
+function applyFilterEventListener() {
+  $(".filter-component").each((ind, elem) => {
+    elem.onclick = null;
+
+    $(elem).on("click", function (event) {
+      event.preventDefault();
+      let href = event.target.href;
+      if (event.target.tagName.toLowerCase() != "a") {
+        href = event.target.parentElement.href;
+      }
+      window.history.pushState(
+        { html: "response.html", pageTitle: "Project Madurai: Filtered Works" },
+        "",
+        href
+      );
+      isFiltered = $(elem).data().filtered == false ? false : true;
+      filterBooksOnCriteria();
+    });
+  });
 }
 
 getAllBookData(displayFunctions);
-
-if (isFiltered) {
-  $("#all-works-tab").tab("show");
-  $("#all-works-tab").text("Filtered Works");
-  let breadcrum = $(".breadcrumb");
-  $(
-    `<li class="breadcrumb-item active">${getFilteredCriteriaAsText(
-      filterCriteria
-    )}</li>`
-  ).appendTo(breadcrum);
-}
-
-console.log("test");
