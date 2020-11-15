@@ -100,7 +100,7 @@ function displayBooks(data) {
   bookList.html("");
   allBooks = data;
   allBooks.sort((a, b) => (a.name > b.name ? 1 : -1));
-  console.log("jqxhr -> allBooks", allBooks);
+
   let filteredBooks = filterBooks(allBooks, filterCriteria);
   $.each(filteredBooks, function (key, val) {
     bookAsCard(val).appendTo(bookList);

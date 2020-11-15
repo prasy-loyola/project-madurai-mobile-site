@@ -34,9 +34,9 @@ function getAllBookData(displayFunctions) {
     displayFunctions.forEach((f) => f(data));
   })
     .fail(function () {
-      console.log("error");
+      console.log("Couldn't get Book Data");
     })
     .always(function () {
-      console.log("complete");
+      console.log("Got Book Data ");
     });
 }
