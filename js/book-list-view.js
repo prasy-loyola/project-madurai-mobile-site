@@ -59,8 +59,8 @@ function applyFilterEventListener() {
         href = event.target.parentElement.href;
       }
       window.history.pushState(
-        { html: "response.html", pageTitle: "Project Madurai: Filtered Works" },
-        "",
+        { pageTitle: "Project Madurai: Filtered Works" },
+        "Project Madurai: Filtered Works",
         href
       );
       isFiltered = $(elem).data().filtered == false ? false : true;
