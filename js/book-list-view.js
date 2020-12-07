@@ -3,6 +3,7 @@ const pdfBaseFolder = "/data/pdf/";
 var groupingCriteria = { category: false, alphabetical: false };
 
 var allBooks;
+var booksMetaData;
 
 function getFilterCriteriaFromURL() {
   return {
@@ -38,12 +39,17 @@ var displayFunctions = [
   displayCategoriesTab,
   displayAuthorsTab,
   updateBreadCrumbs,
+  displayFilteredBooksTab,
   applyFilterEventListener,
 ];
 
 function filterBooksOnCriteria(event) {
   filterCriteria = getFilterCriteriaFromURL();
-  displayFunctions.forEach((fn) => {
+  [
+    updateBreadCrumbs,
+    displayFilteredBooksTab,
+    applyFilterEventListener,
+  ].forEach((fn) => {
     fn(allBooks);
   });
 }
@@ -69,4 +75,9 @@ function applyFilterEventListener() {
   });
 }
 
-getAllBookData(displayFunctions);
+getAllBookData([
+  ...displayFunctions,
+  () => {
+    getBooksMetadata([displayPopulaBooksTab]);
+  },
+]);

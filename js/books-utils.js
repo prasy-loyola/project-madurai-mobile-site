@@ -20,13 +20,14 @@ function filterBooks(books, criteria) {
     }
 
     if (criteria.pdf) {
-      isSelected = notEmpty(book.pdf);
+      isSelected = notEmpty(bogetAllBookDataok.pdf);
     }
     return isSelected;
   });
 }
 
 const booksDataJson = "./data/books-data.json";
+const booksMetaDataJson = "./data/books-metadata.json";
 
 function getAllBookData(displayFunctions) {
   var jqxhr = $.getJSON(booksDataJson, function (data) {
@@ -38,5 +39,18 @@ function getAllBookData(displayFunctions) {
     })
     .always(function () {
       console.log("Got Book Data ");
+    });
+}
+
+function getBooksMetadata(displayFunctions) {
+  var jqxhr = $.getJSON(booksMetaDataJson, function (data) {
+    booksMetaData = data;
+    displayFunctions.forEach((f) => f(data));
+  })
+    .fail(function () {
+      console.log("Couldn't get Books Metadata");
+    })
+    .always(function () {
+      console.log("Got Books Metadata ");
     });
 }
