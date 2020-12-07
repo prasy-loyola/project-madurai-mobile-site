@@ -55,8 +55,8 @@ function DownloadLinksView(links) {
     let linksDiv = $('<p  class="card-text"/>');
     $.each(linkList, (key, val) => {
       let icon = val.endsWith(".pdf")
-        ? `<i class="fas fa-file-pdf fa-lg"></i>`
-        : `<img height="28px" src="./images/epub-icon-11.jpg"> `;
+        ? `<i class="fas fa-file-pdf fa-lg" title="Download PDF"></i>`
+        : `<img height="28px" src="./images/epub-icon-11.jpg" title="Download Epub"> `;
 
       $(
         `<a href="${epubBaseFolder}${val}"> ${icon} ${
@@ -74,7 +74,7 @@ function bookAsCard(book) {
 
   let card = $('<div class="card h-100"/>').appendTo(cardHolder);
   let cardBody = $('<div class="card-body"/>').appendTo(card);
-  let bookTitle = $(`<h5 class="card-title">${book.name}</h5>`).appendTo(
+  let bookTitle = $(`<h6 class="card-title">${book.name}</h6>`).appendTo(
     cardBody
   );
   let authors = AuthorView(book.author).appendTo(cardBody);
@@ -101,10 +101,38 @@ function displayBooks(data) {
   allBooks = data;
   allBooks.sort((a, b) => (a.name > b.name ? 1 : -1));
 
+  $.each(allBooks, function (key, val) {
+    bookAsCard(val).appendTo(bookList);
+  });
+}
+
+function displayFilteredBooksTab(data) {
+  let bookList = $("#filteredBookList");
+  bookList.html("");
+  allBooks = data;
+  allBooks.sort((a, b) => (a.name > b.name ? 1 : -1));
+
+  $("#filterCondition").html(getFilteredCriteriaAsText(filterCriteria));
+
   let filteredBooks = filterBooks(allBooks, filterCriteria);
   $.each(filteredBooks, function (key, val) {
     bookAsCard(val).appendTo(bookList);
   });
+}
+
+function displayPopulaBooksTab(data) {
+  let bookList = $("#popularList");
+  bookList.html("");
+  let popularBooksIds = data.popularWorks;
+  let allBooksData = {};
+  allBooks.forEach((b) => (allBooksData[b.id] = b));
+
+  $.each(
+    popularBooksIds.map((bm) => allBooksData[bm]),
+    function (key, val) {
+      bookAsCard(val).appendTo(bookList);
+    }
+  );
 }
 
 function displayAuthorsTab(data) {
@@ -136,8 +164,9 @@ function displayCategoriesTab(data) {
 
 function updateBreadCrumbs() {
   if (isFiltered) {
-    $("#all-works-tab").tab("show");
-    $("#all-works-tab").text("Filtered Works");
+    $("#filtered-works-tab").show();
+    $("#filtered-works-tab").tab("show");
+    // $("#all-works-tab").text("Filtered Works");
     $(".filter-criteria.breadcrumb-item").each((ind, elem) => elem.remove());
     let breadcrum = $(".breadcrumb");
     $(
@@ -146,6 +175,7 @@ function updateBreadCrumbs() {
       )}</li>`
     ).appendTo(breadcrum);
   } else {
-    $("#all-works-tab").text("All Works");
+    $("#filtered-works-tab").hide();
+    // $("#all-works-tab").text("All Works");
   }
 }
