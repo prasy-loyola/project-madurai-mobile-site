@@ -3,8 +3,52 @@
  * Copyright 2013-2020 Start Bootstrap
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
  */
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --amber: #ffc000ff;
+  --han-blue: #4472c4;
+  --nyanza: #d0e3ca;
+  --tart-orange: #ff3333ff;
+  --golden-brown: #a06318ff;
+  --may-green: #67a054ff;
+  --isabelline: #f1eae4ff;
+  --heliotrope-gray: #9891a1ff;
+  --baby-powder: #fbfef9;
+  --orcid-crayola: #cc92c2;
+  --carribean-green: #03cea4;
+  --carribean-green: #03cea4;
+
+  /* Blue Theme */
+  --navy-blue: #03045eff;
+  --dark-cornflower-blue: #023e8aff;
+  --star-command-blue: #0077b6ff;
+  --blue-green: #0096c7ff;
+  --cerulean-crayola: #00b4d8ff;
+  --sky-blue-crayola: #48cae4ff;
+  --sky-blue-crayola-2: #90e0efff;
+  --blizzard-blue: #ade8f4ff;
+  --powder-blue: #caf0f8ff;
+  --white: #ffffff;
+  --black: #000000;
+  /* CSS HEX */
+  --imperial-red: #e63946ff;
+  --honeydew: #f1faeeff;
+  --powder-blue: #a8dadcff;
+  --celadon-blue: #457b9dff;
+  --prussian-blue: #1d3557ff;
+
+  /* color scheme */
+  --bg-color: var(--baby-powder);
+  --link-color: var(--han-blue);
+  --card-color: #2a2d34;
+  --card-bg-color: #eefcf3;
+}
 body {
   padding-top: 56px;
+  background-color: var(--bg-color);
+  color: black;
 }
 
 .carousel-item {
@@ -19,4 +63,159 @@ body {
 
 .portfolio-item {
   margin-bottom: 30px;
+}
+
+/* Links */
+
+a {
+  color: var(--link-color);
+}
+
+a:hover,
+a:focus {
+  color: var(--link-focus-color);
+}
+
+/* Links Ends */
+
+/* Navs */
+
+.navbar {
+  background-color: var(--amber);
+  color: var(--black);
+}
+.navbar-light .navbar-toggler {
+  background-color: var(--amber);
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.navbar button {
+  background-color: var(--amber);
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.navbar-nav .nav-link {
+  color: var(--menu-items-color);
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: var(--white);
+}
+
+.navbar-light .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-light .navbar-nav .nav-link,
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar-brand {
+  color: black;
+}
+
+/* Tabs */
+.nav-tabs {
+  border-color: black;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #029879;
+  color: white;
+  border-color: black;
+  border-width: 1px;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  border-color: black;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  border-color: black black black;
+}
+
+/* Dropdown */
+
+.dropdown-menu {
+  background-color: var(--dropdown-bg-color);
+  color: var(--dropdown-color);
+}
+
+.dropdown-item {
+  color: var(--dropdown-item-color);
+  background-color: var(--dropdown-item-bg-color);
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: var(--dropdown-item-focus-color);
+  background-color: var(--dropdown-item-bg-focus-color);
+}
+
+/* Dropdown Ends */
+
+/* Card */
+
+.book-item .card-body,
+.book-item .card {
+  background-color: var(--card-bg-color);
+  color: var(--card-color);
+}
+
+.book-item p.card-text {
+  margin-block-end: 0.2em;
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+/* List Item */
+.list-group-item {
+  background-color: var(--card-bg-color);
+}
+
+/* Footer */
+footer {
+  background-color: var(--amber);
+  color: var(--black);
+}
+
+button {
+  color: -internal-light-dark(black, white);
+}
+
+#content {
+  min-height: 50em;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  /* height: 100px;
+  width: 100px; */
+  outline: black;
+  background-size: 100%, 100%;
+  /* border-radius: 50%;
+  border: 1px solid black; */
+  background-image: none;
+}
+.carousel-control-next-icon:after {
+  content: ">";
+  font-size: 5em;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.carousel-control-prev-icon:after {
+  content: "<";
+  font-size: 5em;
+  color: rgba(0, 0, 0, 0.2);
+}
+.text-whitespace-preline {
+  white-space: pre-line;
 }

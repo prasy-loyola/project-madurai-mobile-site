@@ -3,6 +3,7 @@ const pdfBaseFolder = "/data/pdf/";
 var groupingCriteria = { category: false, alphabetical: false };
 
 var allBooks;
+var booksMetaData;
 
 function getFilterCriteriaFromURL() {
   return {
@@ -38,12 +39,17 @@ var displayFunctions = [
   displayCategoriesTab,
   displayAuthorsTab,
   updateBreadCrumbs,
+  displayFilteredBooksTab,
   applyFilterEventListener,
 ];
 
 function filterBooksOnCriteria(event) {
   filterCriteria = getFilterCriteriaFromURL();
-  displayFunctions.forEach((fn) => {
+  [
+    updateBreadCrumbs,
+    displayFilteredBooksTab,
+    applyFilterEventListener,
+  ].forEach((fn) => {
     fn(allBooks);
   });
 }
@@ -59,8 +65,8 @@ function applyFilterEventListener() {
         href = event.target.parentElement.href;
       }
       window.history.pushState(
-        { html: "response.html", pageTitle: "Project Madurai: Filtered Works" },
-        "",
+        { pageTitle: "Project Madurai: Filtered Works" },
+        "Project Madurai: Filtered Works",
         href
       );
       isFiltered = $(elem).data().filtered == false ? false : true;
@@ -69,4 +75,41 @@ function applyFilterEventListener() {
   });
 }
 
-getAllBookData(displayFunctions);
+getAllBookData([
+  ...displayFunctions,
+  () => {
+    getBooksMetadata([displayPopulaBooksTab]);
+  },
+]);
+
+function showSearchedBooks(searchText) {
+  searchText = searchText.toLowerCase();
+  let searchedBooksList = $("#searchedBookList").html("");
+  let allBooksList = $("#bookList");
+  if (searchText.trim() === "") {
+    searchedBooksList.hide();
+    allBooksList.show();
+  } else {
+    searchedBooksList.show();
+    allBooksList.hide();
+    allBooks
+      .filter((book) => {
+        return (
+          book.name.toLowerCase().indexOf(searchText) >= 0 ||
+          book.author.toLowerCase().indexOf(searchText) >= 0
+        );
+      })
+      .forEach((book) => {
+        bookAsCard(book).appendTo(searchedBooksList);
+      });
+  }
+}
+
+$("#searchText").on("keyup", (e) => {
+  const searchText = $(e.target).val();
+  showSearchedBooks(searchText);
+});
+$("#searchText").on("change", (e) => {
+  const searchText = $(e.target).val();
+  showSearchedBooks(searchText);
+});
