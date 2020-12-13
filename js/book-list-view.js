@@ -82,9 +82,8 @@ getAllBookData([
   },
 ]);
 
-$("#searchText").on("keyup", (e) => {
-  const searchText = $(e.target).val().toLowerCase();
-
+function showSearchedBooks(searchText) {
+  searchText = searchText.toLowerCase();
   let searchedBooksList = $("#searchedBookList").html("");
   let allBooksList = $("#bookList");
   if (searchText.trim() === "") {
@@ -104,4 +103,13 @@ $("#searchText").on("keyup", (e) => {
         bookAsCard(book).appendTo(searchedBooksList);
       });
   }
+}
+
+$("#searchText").on("keyup", (e) => {
+  const searchText = $(e.target).val();
+  showSearchedBooks(searchText);
+});
+$("#searchText").on("change", (e) => {
+  const searchText = $(e.target).val();
+  showSearchedBooks(searchText);
 });
