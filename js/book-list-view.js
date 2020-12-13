@@ -81,3 +81,27 @@ getAllBookData([
     getBooksMetadata([displayPopulaBooksTab]);
   },
 ]);
+
+$("#searchText").on("keyup", (e) => {
+  const searchText = $(e.target).val().toLowerCase();
+
+  let searchedBooksList = $("#searchedBookList").html("");
+  let allBooksList = $("#bookList");
+  if (searchText.trim() === "") {
+    searchedBooksList.hide();
+    allBooksList.show();
+  } else {
+    searchedBooksList.show();
+    allBooksList.hide();
+    allBooks
+      .filter((book) => {
+        return (
+          book.name.toLowerCase().indexOf(searchText) >= 0 ||
+          book.author.toLowerCase().indexOf(searchText) >= 0
+        );
+      })
+      .forEach((book) => {
+        bookAsCard(book).appendTo(searchedBooksList);
+      });
+  }
+});
