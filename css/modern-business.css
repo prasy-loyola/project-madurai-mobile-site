@@ -42,7 +42,8 @@
   /* color scheme */
   --bg-color: var(--baby-powder);
   --link-color: var(--han-blue);
-  --card-color: var(--golden-brown);
+  --card-color: #2a2d34;
+  --card-bg-color: #eefcf3;
 }
 body {
   padding-top: 56px;
@@ -123,7 +124,7 @@ a:focus {
 }
 
 .nav-tabs .nav-link.active {
-  background-color: var(--heliotrope-gray);
+  background-color: #029879;
   color: white;
   border-color: black;
   border-width: 1px;
@@ -160,10 +161,15 @@ a:focus {
 /* Dropdown Ends */
 
 /* Card */
-.card-body,
-.card {
+
+.book-item .card-body,
+.book-item .card {
   background-color: var(--card-bg-color);
   color: var(--card-color);
+}
+
+.book-item p.card-text {
+  margin-block-end: 0.2em;
 }
 
 .card-title {
@@ -172,7 +178,7 @@ a:focus {
 
 /* List Item */
 .list-group-item {
-  background-color: var(--list-bg-color);
+  background-color: var(--card-bg-color);
 }
 
 /* Footer */
