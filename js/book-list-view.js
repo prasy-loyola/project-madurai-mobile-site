@@ -99,10 +99,12 @@ function showSearchedBooks(searchText) {
       );
     });
 
+    $(`<p>Search Results</p>`).appendTo(searchedBooksList);
     if (filteredBooks.length < 1) {
       $(
         `<p>Can't find any books/authors matching "<span class="font-weight-bold">${searchText}</span>"</p>`
       ).appendTo(searchedBooksList);
+    } else {
     }
     filteredBooks.forEach((book) => {
       bookAsCard(book).appendTo(searchedBooksList);
