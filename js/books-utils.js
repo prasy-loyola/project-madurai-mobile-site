@@ -29,6 +29,10 @@ function filterBooks(books, criteria) {
 const booksDataJson = "./data/books-data.json";
 const booksMetaDataJson = "./data/books-metadata.json";
 
+$.ajaxSetup({
+  async: true,
+});
+
 function getAllBookData(displayFunctions) {
   var jqxhr = $.getJSON(booksDataJson, function (data) {
     allBooks = data;
