@@ -21,10 +21,10 @@ function TagsView(tagsText) {
       .map((t) => t.trim())
       .filter((t) => t !== "");
     let small = $('<small class="m-1 card-text"/  >');
-    $('<i class="fas fa-tags"></i>').appendTo(small);
+    $('<i class="fas fa-tags" hidden></i>').appendTo(small);
     $.each(tags, (key, val) => {
       $(
-        `<a class="filter-component" href="?tag=${val}"> <span >#${val}</span> </a>`
+        `<i class="fas fa-tag"></i> <a class="filter-component" href="?tag=${val}"><span>${val}</span> </a>`
       ).appendTo(small);
     });
     return small;

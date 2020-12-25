@@ -85,23 +85,30 @@ getAllBookData([
 function showSearchedBooks(searchText) {
   searchText = searchText.toLowerCase();
   let searchedBooksList = $("#searchedBookList").html("");
-  let allBooksList = $("#bookList");
+  let allBooksList = $(".worksTabContent");
   if (searchText.trim() === "") {
     searchedBooksList.hide();
     allBooksList.show();
   } else {
     searchedBooksList.show();
     allBooksList.hide();
-    allBooks
-      .filter((book) => {
-        return (
-          book.name.toLowerCase().indexOf(searchText) >= 0 ||
-          book.author.toLowerCase().indexOf(searchText) >= 0
-        );
-      })
-      .forEach((book) => {
-        bookAsCard(book).appendTo(searchedBooksList);
-      });
+    let filteredBooks = allBooks.filter((book) => {
+      return (
+        book.name.toLowerCase().indexOf(searchText) >= 0 ||
+        book.author.toLowerCase().indexOf(searchText) >= 0
+      );
+    });
+
+    $(`<p>Search Results</p>`).appendTo(searchedBooksList);
+    if (filteredBooks.length < 1) {
+      $(
+        `<p>Can't find any books/authors matching "<span class="font-weight-bold">${searchText}</span>"</p>`
+      ).appendTo(searchedBooksList);
+    } else {
+    }
+    filteredBooks.forEach((book) => {
+      bookAsCard(book).appendTo(searchedBooksList);
+    });
   }
 }
 
@@ -112,4 +119,7 @@ $("#searchText").on("keyup", (e) => {
 $("#searchText").on("change", (e) => {
   const searchText = $(e.target).val();
   showSearchedBooks(searchText);
+});
+$("#searchText").on("search", (e) => {
+  $(e.target).trigger("blur");
 });

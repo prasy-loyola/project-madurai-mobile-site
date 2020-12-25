@@ -12,7 +12,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- <link href="vendor/fontawesome/css/brands.min.css" rel="stylesheet"> -->
+    <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/modern-business.css" rel="stylesheet">
 
@@ -110,19 +111,18 @@
         <div class="row m-1" id="search">
             <div class="form-group">
                 <label for="searchText">Search</label>
-                <input type="text" class="form-control" name="searchText" id="searchText" aria-describedby="searchHelp"
-                    placeholder="">
+                <input type="search" class="form-control" name="searchText" id="searchText"
+                    aria-describedby="searchHelp" placeholder="">
                 <small id="searchHelp" class="form-text text-muted">You can search either by Book title or
                     Author name. Enter "கல்கி" as an example. </small>
             </div>
-
         </div>
 
 
         <div class="row m-1" id="searchedBookList"></div>
 
 
-        <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+        <ul class="nav nav-tabs mt-3 worksTabContent" id="myTab" role="tablist">
 
             <li class="nav-item">
                 <a class="nav-link active" id="all-works-tab" data-toggle="tab" href="#all-works" role="tab"
@@ -145,7 +145,7 @@
                     aria-controls="popular" aria-selected="true">Popular</a>
             </li>
         </ul>
-        <div class="tab-content">
+        <div class="tab-content worksTabContent">
 
             <div class="tab-pane active" id="all-works" role="tabpanel" aria-labelledby="all-works-tab">
 
