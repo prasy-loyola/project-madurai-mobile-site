@@ -34,10 +34,18 @@ $.ajaxSetup({
 });
 
 function getAllBookData(displayFunctions) {
-  var jqxhr = $.getJSON(booksDataJson, function (data) {
-    allBooks = data;
-    displayFunctions.forEach((f) => f(data));
-  })
+  var jqxhr = $.getJSON(
+    booksDataJson + "?timestamp=" + Date.now(),
+    function (data) {
+      allBooks = data;
+
+      allBooks.sort((a, b) => {
+        return compareText(a.name, b.name);
+      });
+
+      displayFunctions.forEach((f) => f(data));
+    }
+  )
     .fail(function () {
       console.log("Couldn't get Book Data");
     })
@@ -47,10 +55,13 @@ function getAllBookData(displayFunctions) {
 }
 
 function getBooksMetadata(displayFunctions) {
-  var jqxhr = $.getJSON(booksMetaDataJson, function (data) {
-    booksMetaData = data;
-    displayFunctions.forEach((f) => f(data));
-  })
+  var jqxhr = $.getJSON(
+    booksMetaDataJson + "?timestamp=" + Date.now(),
+    function (data) {
+      booksMetaData = data;
+      displayFunctions.forEach((f) => f(data));
+    }
+  )
     .fail(function () {
       console.log("Couldn't get Books Metadata");
     })

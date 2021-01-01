@@ -35,21 +35,16 @@ function getFilteredCriteriaAsText(filterCriteria) {
 
 var displayFunctions = [
   displayBooks,
-  //   displayNavCategories,
   displayCategoriesTab,
+  displayTranslationBooks,
   displayAuthorsTab,
-  updateBreadCrumbs,
   displayFilteredBooksTab,
   applyFilterEventListener,
 ];
 
 function filterBooksOnCriteria(event) {
   filterCriteria = getFilterCriteriaFromURL();
-  [
-    updateBreadCrumbs,
-    displayFilteredBooksTab,
-    applyFilterEventListener,
-  ].forEach((fn) => {
+  [displayFilteredBooksTab, applyFilterEventListener].forEach((fn) => {
     fn(allBooks);
   });
 }
@@ -99,7 +94,9 @@ function showSearchedBooks(searchText) {
       );
     });
 
-    $(`<p>Search Results</p>`).appendTo(searchedBooksList);
+    $(`<p class="col-lg-12 col-md-12 col-sm-12">Search Results</p>`).appendTo(
+      searchedBooksList
+    );
     if (filteredBooks.length < 1) {
       $(
         `<p>Can't find any books/authors matching "<span class="font-weight-bold">${searchText}</span>"</p>`
