@@ -19,11 +19,19 @@ jobs:
           server: proftp.drivehq.com
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          server-dir: /wwwhome/pm/${{steps.extract_branch.outputs.branch}}/
+          server-dir: /wwwhome/pm-${{steps.extract_branch.outputs.branch}}/
           dry-run: true
           exclude: .git*
             - .git*/**
             -  "**/.git*/**"
             - package*
             - node_modules/**/*
+            - .vscode*
             - .vscode*/**
+            - .travis.yml
+            - gulpfile.js
+            - LICENSE
+            - palmleaf.png
+            - *.ico
+            - README.md
+            - template.html
