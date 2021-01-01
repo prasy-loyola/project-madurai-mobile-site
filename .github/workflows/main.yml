@@ -1,0 +1,29 @@
+on: push
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2.3.2
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: proftp.drivehq.com
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: /wwwhome/pm/${{steps.extract_branch.outputs.branch}}/
+          dry-run: true
+          exclude: .git*
+            - .git*/**
+            -  "**/.git*/**"
+            - package*
+            - node_modules/**/*
+            - .vscode*/**
