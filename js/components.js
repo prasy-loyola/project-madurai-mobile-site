@@ -49,19 +49,18 @@ function CategoriesView(category) {
   return $("");
 }
 
-function DownloadLinksView(links) {
+function DownloadLinksView(links, bookName) {
   if (notEmpty(links)) {
-    let linkList = links.split(";");
+    let linkList = links.split(";").map((link) => link.trim());
     let linksDiv = $('<p  class="card-text"/>');
-    $.each(linkList, (key, val) => {
+
+    $.each(linkList, (k, val) => {
       let icon = val.endsWith(".pdf")
         ? `<i class="fas fa-file-pdf fa-lg" title="Download PDF"></i>`
-        : `<img height="28px" src="./images/epub-icon-11.jpg" title="Download Epub"> `;
-
+        : `<img height="35rem" src="./images/epub-icon-11.jpg" title="Download Epub"> `;
+      let suffix = linkList.length > 1 ? " - " + (k + 1) : "";
       $(
-        `<a href="${epubBaseFolder}${val}"> ${icon} ${
-          linkList.length > 1 ? " - " + (k + 1) : ""
-        }</a>`
+        `<a href="${epubBaseFolder}${val}" download="${bookName}${suffix}"  >${icon} ${suffix}</a>`
       ).appendTo(linksDiv);
     });
     return linksDiv;
@@ -79,7 +78,7 @@ function bookAsCard(book) {
   );
   let authors = AuthorView(book.author).appendTo(cardBody);
   let tags = TagsView(book.tags).appendTo(cardBody);
-  let links = DownloadLinksView(book.epub).appendTo(cardBody);
+  let links = DownloadLinksView(book.epub, book.name).appendTo(cardBody);
 
   return cardHolder;
 }
@@ -99,8 +98,6 @@ function displayBooks(data) {
   let bookList = $("#bookList");
   bookList.html("");
   allBooks = data;
-  allBooks.sort((a, b) => (a.name > b.name ? 1 : -1));
-
   $.each(allBooks, function (key, val) {
     bookAsCard(val).appendTo(bookList);
   });
@@ -110,7 +107,7 @@ function displayFilteredBooksTab(data) {
   let bookList = $("#filteredBookList");
   bookList.html("");
   allBooks = data;
-  allBooks.sort((a, b) => (a.name > b.name ? 1 : -1));
+  allBooks.sort((a, b) => compareText(a.name, b.name));
 
   $("#filterCondition").html(getFilteredCriteriaAsText(filterCriteria));
 
@@ -118,6 +115,13 @@ function displayFilteredBooksTab(data) {
   $.each(filteredBooks, function (key, val) {
     bookAsCard(val).appendTo(bookList);
   });
+
+  if (isFiltered) {
+    $("#filtered-works-tab").show();
+    $("#filtered-works-tab").tab("show");
+  } else {
+    $("#filtered-works-tab").hide();
+  }
 }
 
 function displayPopulaBooksTab(data) {
@@ -141,7 +145,7 @@ function displayAuthorsTab(data) {
     .reduce((prev, curr) => [...prev, ...curr])
     .map((a) => a.trim());
 
-  let allAuthors = unique(authors.sort());
+  let allAuthors = unique(authors.sort(compareText));
   let allAuthorsList = $("#authorsList");
   allAuthorsList.html("");
   $.each(allAuthors, function (key, val) {
@@ -152,7 +156,7 @@ function displayAuthorsTab(data) {
 }
 
 function displayCategoriesTab(data) {
-  let allCategories = unique(data.map((b) => b.category).sort());
+  let allCategories = unique(data.map((b) => b.category).sort(compareText));
   let categoriesList = $("#categoriesList");
   categoriesList.html("");
   $.each(allCategories, function (key, val) {
@@ -162,20 +166,11 @@ function displayCategoriesTab(data) {
   });
 }
 
-function updateBreadCrumbs() {
-  if (isFiltered) {
-    $("#filtered-works-tab").show();
-    $("#filtered-works-tab").tab("show");
-    // $("#all-works-tab").text("Filtered Works");
-    $(".filter-criteria.breadcrumb-item").each((ind, elem) => elem.remove());
-    let breadcrum = $(".breadcrumb");
-    $(
-      `<li class="breadcrumb-item filter-criteria active">${getFilteredCriteriaAsText(
-        filterCriteria
-      )}</li>`
-    ).appendTo(breadcrum);
-  } else {
-    $("#filtered-works-tab").hide();
-    // $("#all-works-tab").text("All Works");
-  }
+function displayTranslationBooks(data) {
+  let bookList = $("#translationsList");
+  bookList.html("");
+  let translations = data.filter((b) => b.name.charCodeAt(0) < 123);
+  $.each(translations, function (key, val) {
+    bookAsCard(val).appendTo(bookList);
+  });
 }

@@ -31,3 +31,14 @@ function unique(array) {
     return previous;
   }, []);
 }
+
+function compareText(text1, text2) {
+  let isTxt1English = text1.charCodeAt(0) > 122;
+  let isTxt2English = text2.charCodeAt(0) > 122;
+
+  if (isTxt1English === isTxt2English) {
+    return text1 > text2 ? 1 : -1;
+  } else {
+    return isTxt2English ? 1 : -1;
+  }
+}
