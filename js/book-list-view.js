@@ -78,7 +78,7 @@ getAllBookData([
 ]);
 
 function showSearchedBooks(searchText) {
-  searchText = searchText.toLowerCase();
+  searchText = searchText.toLowerCase().trim();
   let searchedBooksList = $("#searchedBookList").html("");
   let allBooksList = $(".worksTabContent");
   if (searchText.trim() === "") {
